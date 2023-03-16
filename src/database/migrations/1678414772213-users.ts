@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { TABLE_NAME } from '@/shared/constants/tableName';
+import { TABLE_NAME } from '@/shared/constants/table-name';
 
 export class users1678414772213 implements MigrationInterface {
   public table = new Table({

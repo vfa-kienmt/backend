@@ -6,14 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import mysql from '@/config/database/mysql';
 import { UsersModule } from '@/modules/users/users.module';
 import { LoggerModule } from '@/config/logger/logger.module';
-import { HttpErrorFilter } from './shared/filters/httpError.filter';
+import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 
 @Module({
   imports: [TypeOrmModule.forRoot(mysql), LoggerModule, UsersModule],
   providers: [
     {
       provide: APP_FILTER,
-      useClass: HttpErrorFilter,
+      useClass: HttpExceptionFilter,
     },
     {
       provide: APP_INTERCEPTOR,

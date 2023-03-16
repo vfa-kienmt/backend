@@ -4,6 +4,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as Express from 'express';
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
+import { ValidationPipe } from '@/shared/pipes/validation.pipe';
 
 async function bootstrap() {
   // aws health check
@@ -33,7 +34,7 @@ async function bootstrap() {
     preflightContinue: false,
     optionsSuccessStatus: 204,
   });
-
+  app.useGlobalPipes(new ValidationPipe());
   const port = process.env.APP_PORT || 3000;
   await app.listen(port, '0.0.0.0', () => {
     new Logger('Application').log(

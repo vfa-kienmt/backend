@@ -46,7 +46,7 @@ services:
       test: [ "CMD", "redis-cli", "ping" ]
       retries: 3
       timeout: 5s
-  family-phpmyadmin:
+  spl-phpmyadmin:
     depends_on:
       - spl-mysql
     image: phpmyadmin

@@ -5,13 +5,13 @@
  * Copyright (c) 2023 VFA Asia Co.,Ltd. All rights reserved.
  */
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { BaseEntity } from './base.entity';
-import { TABLE_NAME } from '@/shared/constants/tableName';
+import { Base } from './base.entity';
+import { TABLE_NAME } from '@/shared/constants/table-name';
 
 @Entity({
   name: TABLE_NAME.USER,
 })
-export class UserEntity extends BaseEntity {
+export class User extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 

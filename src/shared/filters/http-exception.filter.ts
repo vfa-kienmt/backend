@@ -5,17 +5,18 @@
  * Copyright (c) 2023 VFA Asia Co.,Ltd. All rights reserved.
  */
 import {
-  ExceptionFilter,
-  Catch,
   ArgumentsHost,
-  Logger,
+  Catch,
+  ExceptionFilter,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
+import { ValidationException } from '@/shared/exceptions/validator.exception';
 
 @Catch()
-export class HttpErrorFilter implements ExceptionFilter {
-  private readonly logger = new Logger(HttpErrorFilter.name);
+export class HttpExceptionFilter implements ExceptionFilter {
+  private readonly logger = new Logger(HttpExceptionFilter.name);
 
   /**
    * Override for custom error handling
@@ -31,9 +32,12 @@ export class HttpErrorFilter implements ExceptionFilter {
       ? exception.getStatus()
       : HttpStatus.INTERNAL_SERVER_ERROR;
 
+    const getError = exception.getResponse();
+
     const errorResponse = {
-      code: status,
-      errorCode: this.formatErrorCode(),
+      statusCode: getError['statusCode'],
+      error: this.formatErrorCode(exception),
+      message: getError['message'],
     };
 
     const log = {
@@ -52,8 +56,12 @@ export class HttpErrorFilter implements ExceptionFilter {
    *
    * @protected
    */
-  protected formatErrorCode(): string {
-    return 'Error';
+  protected formatErrorCode(e: HttpException | ValidationException): string {
+    if (e instanceof ValidationException) {
+      return `INVALID_${e.getResponse()['error'].toUpperCase()}`;
+    }
+    const error = e.getResponse()['error'].split(' ');
+    return error.join('_').toUpperCase();
   }
 
   /**
