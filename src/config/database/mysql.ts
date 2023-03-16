@@ -27,7 +27,7 @@ export default {
     migrationsDir: path.join(__dirname, '../..', 'database/migrations'),
   },
   migrationsTableName: 'migrations',
-  migrationsRun: false,
+  migrationsRun: true,
   logging: true,
   synchronize: false,
 } as TypeOrmModuleOptions;
