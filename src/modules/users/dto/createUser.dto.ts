@@ -25,4 +25,11 @@ export class CreateUserDTO {
     example: 'john@gmail.com',
   })
   email: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'Password of the user',
+    example: 'Ab1234@@',
+  })
+  password: string;
 }

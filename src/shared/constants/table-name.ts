@@ -6,4 +6,6 @@
  */
 export const TABLE_NAME = {
   USER: 'users',
+  CATEGORY: 'category',
+  POST: 'posts',
 };

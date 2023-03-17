@@ -6,18 +6,31 @@
  */
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { Base } from './base.entity';
-import { TABLE_NAME } from '@/shared/constants/table-name';
+import { randomInt } from 'crypto';
+import { TABLE_NAME } from '@/shared/constants';
 
 @Entity({
   name: TABLE_NAME.USER,
 })
-export class User extends Base {
+export class UserEntity extends Base {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number = randomInt(1000000);
 
   @Column({
     type: 'varchar',
     length: 45,
   })
   name: string;
+
+  @Column({
+    type: 'varchar',
+    length: 45,
+  })
+  email: string;
+
+  @Column({
+    type: 'varchar',
+    length: 60,
+  })
+  password: string;
 }

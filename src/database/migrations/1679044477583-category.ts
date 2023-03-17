@@ -1,31 +1,26 @@
+import { TABLE_NAME } from '@/shared/constants';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { TABLE_NAME } from '@/shared/constants/table-name';
 
-export class users1678414772213 implements MigrationInterface {
+export class category1679044477583 implements MigrationInterface {
   public table = new Table({
-    name: TABLE_NAME.USER,
+    name: TABLE_NAME.CATEGORY,
     columns: [
       {
         name: 'id',
         type: 'int',
         isPrimary: true,
+        isGenerated: true,
       },
       {
-        name: 'name',
+        name: 'slug',
         type: 'varchar',
-        length: '45',
+        length: '100',
         isNullable: false,
       },
       {
-        name: 'email',
+        name: 'category',
         type: 'varchar',
-        length: '45',
-        isNullable: false,
-      },
-      {
-        name: 'password',
-        type: 'varchar',
-        length: '60',
+        length: '100',
         isNullable: false,
       },
       {
@@ -46,7 +41,6 @@ export class users1678414772213 implements MigrationInterface {
       },
     ],
   });
-
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(this.table);
   }

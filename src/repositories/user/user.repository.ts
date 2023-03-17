@@ -5,14 +5,17 @@
  * Copyright (c) 2023 VFA Asia Co.,Ltd. All rights reserved.
  */
 import { DataSource, Repository } from 'typeorm';
-import { User } from '@/entities/user.entity';
+import { UserEntity } from '@/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { UserInterface } from '@/repositories/user/user.interface';
 
 @Injectable()
-export class UserRepository extends Repository<User> implements UserInterface {
+export class UserRepository
+  extends Repository<UserEntity>
+  implements UserInterface
+{
   constructor(private dataSource: DataSource) {
-    super(User, dataSource.createEntityManager());
+    super(UserEntity, dataSource.createEntityManager());
   }
 
   /**
@@ -20,7 +23,11 @@ export class UserRepository extends Repository<User> implements UserInterface {
    *
    * @param id
    */
-  findUserById(id: number): Promise<User> {
+  findUserById(id: number): Promise<UserEntity> {
     return this.findOne({ where: { id } });
+  }
+
+  findUserByEmail(email: string): Promise<UserEntity> {
+    return this.findOne({ where: { email: email } });
   }
 }

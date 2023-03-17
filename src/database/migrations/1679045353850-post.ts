@@ -1,9 +1,9 @@
+import { TABLE_NAME } from '@/shared/constants';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { TABLE_NAME } from '@/shared/constants/table-name';
 
-export class users1678414772213 implements MigrationInterface {
+export class post1679045353850 implements MigrationInterface {
   public table = new Table({
-    name: TABLE_NAME.USER,
+    name: TABLE_NAME.POST,
     columns: [
       {
         name: 'id',
@@ -11,21 +11,26 @@ export class users1678414772213 implements MigrationInterface {
         isPrimary: true,
       },
       {
-        name: 'name',
+        name: 'slug',
         type: 'varchar',
         length: '45',
         isNullable: false,
       },
       {
-        name: 'email',
+        name: 'title',
         type: 'varchar',
-        length: '45',
+        length: '255',
         isNullable: false,
       },
       {
-        name: 'password',
+        name: 'description',
         type: 'varchar',
-        length: '60',
+        length: '255',
+        isNullable: false,
+      },
+      {
+        name: 'text',
+        type: 'text',
         isNullable: false,
       },
       {
@@ -43,6 +48,16 @@ export class users1678414772213 implements MigrationInterface {
         type: 'datetime',
         isNullable: true,
         default: null,
+      },
+      {
+        name: 'user_id',
+        type: 'int',
+        isNullable: false,
+      },
+      {
+        name: 'category_id',
+        type: 'int',
+        isNullable: false,
       },
     ],
   });
