@@ -1,5 +1,10 @@
 import { TABLE_NAME } from '@/shared/constants';
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
 export class post1679045353850 implements MigrationInterface {
   public table = new Table({
@@ -34,6 +39,16 @@ export class post1679045353850 implements MigrationInterface {
         isNullable: false,
       },
       {
+        name: 'userId',
+        type: 'int',
+        isNullable: false,
+      },
+      {
+        name: 'categoryId',
+        type: 'int',
+        isNullable: false,
+      },
+      {
         name: 'created_at',
         type: 'datetime(6)',
         default: `CURRENT_TIMESTAMP(6)`,
@@ -49,24 +64,34 @@ export class post1679045353850 implements MigrationInterface {
         isNullable: true,
         default: null,
       },
-      {
-        name: 'user_id',
-        type: 'int',
-        isNullable: false,
-      },
-      {
-        name: 'category_id',
-        type: 'int',
-        isNullable: false,
-      },
     ],
   });
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(this.table);
+    await queryRunner.createForeignKey(
+      TABLE_NAME.POST,
+      new TableForeignKey({
+        columnNames: ['userId'],
+        referencedColumnNames: ['id'],
+        referencedTableName: TABLE_NAME.USER,
+        onDelete: 'CASCADE',
+      }),
+    );
+    await queryRunner.createForeignKey(
+      TABLE_NAME.POST,
+      new TableForeignKey({
+        columnNames: ['categoryId'],
+        referencedColumnNames: ['id'],
+        referencedTableName: TABLE_NAME.CATEGORY,
+        onDelete: 'CASCADE',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable(this.table);
+    await queryRunner.dropTable(TABLE_NAME.USER);
+    await queryRunner.dropTable(TABLE_NAME.CATEGORY);
   }
 }

@@ -3,6 +3,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -26,9 +27,9 @@ export class PostEntity extends BaseEntity {
   @Column({ type: 'text' })
   text: string;
 
-  @OneToMany((type) => UserEntity, (userEntity) => userEntity.id)
-  user_id: UserEntity;
+  @ManyToOne((type) => UserEntity, (user) => user.posts)
+  user: UserEntity;
 
-  @OneToMany((type) => CategoryEntity, (categoryEntity) => categoryEntity.id)
+  @ManyToOne((type) => CategoryEntity, (category) => category.posts)
   category: CategoryEntity;
 }

@@ -1,7 +1,15 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from '@/modules/users/dto/createUser.dto';
 import { UserEntity } from '@/entities/user.entity';
+import { ApiKeyGuard } from '@/shared/guards/apiKey.guard';
 
 @Controller('')
 export class UsersController {
@@ -18,6 +26,7 @@ export class UsersController {
   }
 
   @Post('create-user')
+  @UseGuards(ApiKeyGuard)
   @HttpCode(201)
   public async createUser(
     @Body() createUserDTO: CreateUserDTO,

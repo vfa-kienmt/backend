@@ -1,6 +1,7 @@
 import { TABLE_NAME } from '@/shared/constants';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Base } from './base.entity';
+import { PostEntity } from './post.entity';
 
 @Entity({ name: TABLE_NAME.CATEGORY })
 export class CategoryEntity extends Base {
@@ -18,4 +19,7 @@ export class CategoryEntity extends Base {
     length: '100',
   })
   category: string;
+
+  @OneToMany((type) => PostEntity, (post) => post.category)
+  posts: PostEntity[];
 }
